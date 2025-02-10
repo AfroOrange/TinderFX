@@ -1,5 +1,6 @@
 package aed.firematch.firebase;
 
+import aed.firematch.ui.modelos.Genero;
 import aed.firematch.ui.modelos.Usuario;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -64,6 +65,7 @@ public class DBManager {
         Map<String, Object> usuarioData = new HashMap<>();
         usuarioData.put("nombre", usuario.getNombre());
         usuarioData.put("apellidos", usuario.getApellidos());
+        usuarioData.put("edad", usuario.getEdad());
         usuarioData.put("nickname", usuario.getNickname());
         usuarioData.put("email", usuario.getEmail());
         usuarioData.put("password", usuario.getPassword());
@@ -91,6 +93,23 @@ public class DBManager {
                         index++;
                     }
                     System.out.println("✅ Características agregadas para el usuario: " + idUsuario);
+                }
+
+                // Crear la subcolección "Gustos" con IDs numerados
+                if (usuario.getGustos() != null && !usuario.getGustos().isEmpty()) {
+                    CollectionReference gustosRef = usuarioDoc.collection("Gustos");
+
+                    int index = 1;
+                    for (Genero gusto : usuario.getGustos()) {
+                        String idGusto = "gusto" + index; // ID fijo numerado
+
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("valor", gusto.name());
+                        gustosRef.document(idGusto).set(data).get(); // Guardar con ID fijo
+
+                        index++;
+                    }
+                    System.out.println("✅ Gustos agregados para el usuario: " + idUsuario);
                 }
             } else {
                 System.out.println("⚠️ El usuario ya existe: " + idUsuario);
