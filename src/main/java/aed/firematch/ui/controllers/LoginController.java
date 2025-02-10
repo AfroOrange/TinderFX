@@ -93,8 +93,10 @@ public class LoginController implements Initializable {
         usuario1.setEmail("jonathan@gmail.com");
         usuario1.setNombre("Jonathan");
         usuario1.setApellidos("Gutiérrez");
+        usuario1.setEdad(25);
         usuario1.setPassword("jonathan123");
         usuario1.setDescripcion("Amo la programación");
+        usuario1.setGenero(Genero.NO_BINARIO);
         usuario1.setNickname("jonathan_gr");
         usuario1.getCaracteristicas().add("Me gusta el furbo");
         usuario1.getGustos().add(Genero.FEMENINO);
@@ -107,8 +109,10 @@ public class LoginController implements Initializable {
         usuario2.setEmail("maria@gmail.com");
         usuario2.setNombre("Maria");
         usuario2.setApellidos("Lopez");
+        usuario2.setEdad(18);
         usuario2.setPassword("maria123");
         usuario2.setDescripcion("Me encanta la música");
+        usuario2.setGenero(Genero.OTRO);
         usuario2.setNickname("maria_l");
         usuario2.getCaracteristicas().add("Me gusta el piano");
         usuario2.getGustos().add(Genero.MASCULINO);
