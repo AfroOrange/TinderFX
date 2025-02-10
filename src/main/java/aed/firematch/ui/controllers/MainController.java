@@ -116,7 +116,7 @@ public class MainController implements Initializable {
         LoginController loginController = new LoginController();
 
         mainRoot.getScene().getWindow().hide();
-        
+
         // create a new login
         Scene scene = new Scene(loginController.getLoginRoot());
         Stage loginStage = new Stage();

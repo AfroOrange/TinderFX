@@ -5,48 +5,59 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="loginRoot" hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" vgap="5.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane fx:id="loginRoot" hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="350.0" style="-fx-border-color: orange; -fx-border-width: 1;" vgap="5.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
     <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints vgrow="NEVER" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
     <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
     <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
       <RowConstraints minHeight="10.0" vgrow="NEVER" />
       <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <Label text="Email:" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+      <Label text="Email:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <Label text="Contraseña:" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+      <Label text="Password:" GridPane.halignment="LEFT" GridPane.rowIndex="3">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <TextField fx:id="emailTextField" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <PasswordField fx:id="passwdTextField" promptText="Enter your password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="INICIAR SESIÓN" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+      <TextField fx:id="emailTextField" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <PasswordField fx:id="passwdTextField" promptText="Enter your password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label text="TinderFX " GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
-      <ButtonBar GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <ButtonBar buttonMinWidth="150.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
         <buttons>
-            <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#onLoginAction" text="Iniciar sesión" />
-            <Button fx:id="cerrarButton" mnemonicParsing="false" onAction="#onCerrarButton" text="Cerrar" />
+            <Button fx:id="loginButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onLoginAction" style="-fx-background-color: orange; -fx-background-radius: 3;" text="Login">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="cerrarButton" alignment="CENTER" mnemonicParsing="false" onAction="#onCerrarButton" style="-fx-background-color: orange; -fx-background-radius: 3;" text="Exit">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
         </buttons>
          <GridPane.margin>
             <Insets top="30.0" />
          </GridPane.margin>
       </ButtonBar>
+      <Separator prefWidth="300.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
