@@ -19,7 +19,7 @@
    <center>
       <ImageView fx:id="hediondaPfP" fitHeight="347.0" fitWidth="331.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../images/wilfriedsingo.png" />
+            <Image url="@../images/usuario9.png" />
          </image>
       </ImageView>
    </center>

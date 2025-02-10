@@ -38,7 +38,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT">
                <image>
-                  <Image url="@../images/wilfriedsingo.png" />
+                  <Image url="@../images/usuario9.png" />
                </image>
             </ImageView>
             <Label text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
@@ -90,7 +90,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" style="-fx-background-color: orange; -fx-border-color: black;" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
+            <Button mnemonicParsing="false" onAction="#onCheckMatches" style="-fx-background-color: orange; -fx-border-color: black;" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets bottom="5.0" right="5.0" />
                </GridPane.margin>

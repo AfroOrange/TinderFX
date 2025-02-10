@@ -85,6 +85,9 @@ public class HediondaController implements Initializable {
     }
 
     private void rejectperson() {
+
+        dbManager.cargarImagenesUsuarios(usuarios);
+
         if (usuarios != null && !usuarios.isEmpty()) {
             usuarios.remove(0);
             mostrarUsuarios(usuarios);
@@ -115,7 +118,7 @@ public class HediondaController implements Initializable {
     private void loadUsers() {
         usuarios = dbManager.obtenerUsuariosAleatorios(userEmail);
 
-        // remove the user from the list
+        // Remove the user from the list
         for (Usuario usuario : usuarios) {
             if (Objects.equals(usuario.getEmail(), userEmail)) {
                 usuarios.remove(usuario);
@@ -123,6 +126,10 @@ public class HediondaController implements Initializable {
             }
         }
 
+        // Cargar imágenes de los usuarios
+        dbManager.cargarImagenesUsuarios(usuarios);
+
+        // Mostrar usuarios
         mostrarUsuarios(usuarios);
     }
 
@@ -139,6 +146,11 @@ public class HediondaController implements Initializable {
         hediondaAge.setText(String.valueOf(usuario.getEdad()));
         hediondaDescription.getChildren().clear();
         hediondaDescription.getChildren().add(new Text(usuario.getDescripcion()));
+        if (usuario.getFotoPerfil() != null) {
+            hediondaPfP.setImage(usuario.getFotoPerfil());
+        } else {
+            System.err.println("No profile picture found for user ID: " + usuario.getId());
+        }
     }
 
     public Label getHediondaAge() {

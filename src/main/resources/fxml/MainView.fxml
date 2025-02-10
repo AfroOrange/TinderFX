@@ -38,7 +38,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT">
                <image>
-                  <Image url="@../images/wilfriedsingo.png" />
+                  <Image url="@../images/usuario9.png" />
                </image>
             </ImageView>
             <Label text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
