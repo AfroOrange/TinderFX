@@ -23,14 +23,11 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     // Model
-    private DBManager dbManager = new DBManager();
-    private StringProperty email = new SimpleStringProperty();
-    private StringProperty password = new SimpleStringProperty();
+    private final DBManager dbManager = new DBManager();
+    private final StringProperty email = new SimpleStringProperty();
+    private final StringProperty password = new SimpleStringProperty();
 
-    private MainController mainController = new MainController();
-
-
-    //  View
+    // View
     @FXML
     private Button cerrarButton;
 
@@ -60,6 +57,7 @@ public class LoginController implements Initializable {
             stage.close();
 
             // Abrir la ventana principal
+            MainController mainController = new MainController(email.getValue());
             Stage mainStage = new Stage();
             Scene scene = new Scene(mainController.getRoot());
             mainStage.setScene(scene);
@@ -122,7 +120,6 @@ public class LoginController implements Initializable {
         email.bindBidirectional(emailTextField.textProperty());
         password.bindBidirectional(passwdTextField.textProperty());
     }
-
 
     public GridPane getLoginRoot() {
         return loginRoot;

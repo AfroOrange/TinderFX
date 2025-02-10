@@ -23,6 +23,7 @@ public class MainController implements Initializable {
 
     // Model
     private DBManager dbManager = new DBManager();
+    private final String userEmail;
 
     // View
     @FXML
@@ -49,7 +50,8 @@ public class MainController implements Initializable {
     @FXML
     private Button startButton;
 
-    public MainController() {
+    public MainController(String userEmail) {
+        this.userEmail = userEmail;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
             loader.setController(this);
@@ -66,7 +68,6 @@ public class MainController implements Initializable {
             cityLabel.setText(IPinfoAPI.getLocation());
 
             // Fetch user information from Firestore
-            String userEmail = "jonathan@gmail.com"; // Replace with the actual user email
             Usuario usuario = dbManager.getUserByEmail(userEmail);
 
             if (usuario != null) {
@@ -85,7 +86,6 @@ public class MainController implements Initializable {
         HediondaController hediondaController = new HediondaController();
         mainRoot.setCenter(hediondaController.getHediondasRoot());
     }
-
 
     public BorderPane getRoot() {
         return mainRoot;
