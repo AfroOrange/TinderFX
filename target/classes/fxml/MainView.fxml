@@ -17,8 +17,8 @@
    <left>
       <GridPane fx:id="userInformationPane" prefWidth="300.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="-Infinity" minWidth="10.0" />
+          <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -76,7 +76,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Description:" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+            <Label text="Description:" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets top="30.0" />
                </GridPane.margin>
