@@ -70,6 +70,7 @@ public class DBManager {
         usuarioData.put("email", usuario.getEmail());
         usuarioData.put("password", usuario.getPassword());
         usuarioData.put("descripcion", usuario.getDescripcion());
+        usuarioData.put("genero", usuario.getGenero().name());
         usuarioData.put("fotoPerfil", null); // Se manejará en Firebase Storage
 
         try {
