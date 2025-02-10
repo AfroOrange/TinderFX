@@ -18,10 +18,11 @@
 
 <BorderPane fx:id="mainRoot" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <GridPane fx:id="userInformationPane" prefWidth="300.0" style="-fx-border-color: orange; -fx-border-width: 3;" BorderPane.alignment="CENTER">
+      <GridPane fx:id="userInformationPane" prefWidth="300.0" style="-fx-border-color: orange; -fx-border-width: 1; -fx-border-radius: 3;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="-Infinity" minWidth="10.0" />
           <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -38,7 +39,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2147483647" GridPane.halignment="LEFT">
                <image>
-                  <Image url="@../images/usuario9.png" />
+                  <Image url="@../images/wilfriedsingo.png" />
                </image>
             </ImageView>
             <Label text="Name:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
@@ -90,9 +91,9 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#onCheckMatches" style="-fx-background-color: orange; -fx-border-color: black;" GridPane.columnSpan="2147483647" GridPane.rowIndex="9">
+            <Button mnemonicParsing="false" onAction="#onCheckMatches" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: orange; -fx-background-radius: 30;" GridPane.halignment="LEFT" GridPane.rowIndex="9">
                <GridPane.margin>
-                  <Insets bottom="5.0" right="5.0" />
+                  <Insets />
                </GridPane.margin>
                <graphic>
                   <FontIcon iconLiteral="mdi2a-account-star" iconSize="20" />
@@ -103,9 +104,26 @@
             </Button>
             <Separator maxWidth="1.7976931348623157E308" prefWidth="300.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
             <Separator prefWidth="300.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: orange; -fx-background-radius: 30;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2k-keyboard-return" iconSize="20" />
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Return to main menu">
+                     <graphic>
+                        <FontIcon />
+                     </graphic>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onLogoutAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: orange; -fx-background-radius: 30;" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2l-logout-variant" iconSize="20" />
+               </graphic>
+            </Button>
          </children>
          <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets right="10.0" />
          </BorderPane.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -113,7 +131,7 @@
       </GridPane>
    </left>
    <center>
-      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="startBox" alignment="CENTER" spacing="10.0" style="-fx-border-color: orange; -fx-border-radius: 3;" BorderPane.alignment="CENTER">
          <children>
             <Label text="Press the button to begin!">
                <font>
@@ -127,6 +145,6 @@
       </VBox>
    </center>
    <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
 </BorderPane>

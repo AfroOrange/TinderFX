@@ -191,4 +191,7 @@ public class DBManager {
         }
     }
 
+    public void logout() {
+        FirebaseApp.getInstance().delete();
+    }
 }

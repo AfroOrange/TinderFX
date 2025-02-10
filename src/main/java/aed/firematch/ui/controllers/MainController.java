@@ -7,12 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,6 +54,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Button startButton;
+
+    @FXML
+    private VBox startBox;
 
     public MainController(String userEmail) {
         this.userEmail = userEmail;
@@ -90,7 +97,33 @@ public class MainController implements Initializable {
 
     @FXML
     void onCheckMatches(ActionEvent event) {
+        // this method will load a modal window with the list of users that liked the current user
 
+        MatchesController matchesController = new MatchesController();
+        mainRoot.setCenter(matchesController.getMatchesRoot());
+
+    }
+
+    @FXML
+    void onBackAction(ActionEvent event) {
+        // this method will remove the center of the main root and show the user information again
+        mainRoot.setCenter(startBox);
+    }
+
+    @FXML
+    void onLogoutAction(ActionEvent event) {
+        // this method will close the main window and show the login window
+        LoginController loginController = new LoginController();
+
+        mainRoot.getScene().getWindow().hide();
+
+        // create a new login
+        Scene scene = new Scene(loginController.getLoginRoot());
+        Stage loginStage = new Stage();
+        loginStage.initStyle(StageStyle.UNDECORATED);
+        loginStage.setScene(scene);
+        loginStage.setTitle("FireMatch");
+        loginStage.show();
     }
 
     public BorderPane getRoot() {
