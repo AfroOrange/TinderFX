@@ -119,9 +119,6 @@ public class DBManager {
         }
     }
 
-
-
-
     public boolean login(String usuario, String password) {
         CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
         Query query = usuariosRef.whereEqualTo("email", usuario).whereEqualTo("password", password);
@@ -136,5 +133,17 @@ public class DBManager {
             System.err.println("Error al autenticar usuario: " + e.getMessage());
         }
         return false;
+    }
+
+    public Usuario getUserByEmail(String email) throws ExecutionException, InterruptedException {
+        CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
+        Query query = usuariosRef.whereEqualTo("email", email);
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+        for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+            Usuario usuario = document.toObject(Usuario.class);
+            return usuario;
+        }
+        return null;
     }
 }

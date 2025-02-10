@@ -1,6 +1,8 @@
 package aed.firematch.ui.controllers;
 
 import aed.firematch.firebase.DBManager;
+import aed.firematch.ipinfo.IPinfoAPI;
+import aed.firematch.ui.modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +11,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class MainController implements Initializable {
 
@@ -56,7 +61,23 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // initialize user information
+        try {
+            cityLabel.setText(IPinfoAPI.getLocation());
 
+            // Fetch user information from Firestore
+            String userEmail = "jonathan@gmail.com"; // Replace with the actual user email
+            Usuario usuario = dbManager.getUserByEmail(userEmail);
+
+            if (usuario != null) {
+                nameLabel.setText(usuario.getNombre());
+                ageLabel.setText(String.valueOf(usuario.getEdad()));
+                genderLabel.setText(usuario.getGenero().name());
+                descriptionArea.getChildren().add(new Text(usuario.getDescripcion()));
+            }
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
