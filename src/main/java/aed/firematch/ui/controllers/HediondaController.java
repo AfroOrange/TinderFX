@@ -1,6 +1,7 @@
 package aed.firematch.ui.controllers;
 
 import aed.firematch.firebase.DBManager;
+import aed.firematch.ui.modelos.SharedData;
 import aed.firematch.ui.modelos.Usuario;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -46,8 +47,8 @@ public class HediondaController implements Initializable {
     @FXML
     private Button singarButton;
 
-    private DBManager dbManager = new DBManager();
-    private String userEmail;
+    private final DBManager dbManager = new DBManager();
+    private final String userEmail;
     private List<Usuario> usuarios;
     private final ListProperty<Usuario> usuariosProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -97,9 +98,11 @@ public class HediondaController implements Initializable {
         Usuario usuario = usuarios.get(0);
 
         // Guardar el usuario en la lista de usuarios que le han gustado
-        usuariosProperty.add(usuario);
+        SharedData.getInstance().getLikedUsuarios().add(usuario.getNombre());
         System.out.println("Le has dado like a " + usuario.getNombre());
         rejectperson();
+
+        usuario.getMatches().add(usuario);
 
         if (usuarios.isEmpty()) {
             emptyUsersAlert();

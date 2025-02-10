@@ -167,4 +167,7 @@ public class DBManager {
         return usuarios;
     }
 
+    public void logout() {
+        FirebaseApp.getInstance().delete();
+    }
 }
