@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -71,7 +72,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // initialize user information
+        // Initialize user information
         try {
             cityLabel.setText(IPinfoAPI.getLocation());
 
@@ -83,6 +84,15 @@ public class MainController implements Initializable {
                 ageLabel.setText(String.valueOf(usuario.getEdad()));
                 genderLabel.setText(usuario.getGenero().name());
                 descriptionArea.getChildren().add(new Text(usuario.getDescripcion()));
+                if (usuario.getFotoPerfil() != null) {
+                    ImageView profileImageView = new ImageView(usuario.getFotoPerfil());
+                    profileImageView.setFitHeight(150);
+                    profileImageView.setFitWidth(200);
+                    profileImageView.setPreserveRatio(true);
+                    userInformationPane.add(profileImageView, 0, 0, 3, 1);
+                } else {
+                    System.err.println("No profile picture found for user ID: " + usuario.getId());
+                }
             }
         } catch (IOException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);

@@ -100,6 +100,12 @@ public class HediondaController implements Initializable {
         // Obtener el usuario actual
         Usuario usuario = usuarios.get(0);
 
+        // Verificar si el usuario ya está en la lista de matches
+        if (SharedData.getInstance().getLikedUsuarios().contains(usuario.getNombre())) {
+            System.err.println("El usuario " + usuario.getNombre() + " ya está en la lista de matches.");
+            return;
+        }
+
         // Guardar el usuario en la lista de usuarios que le han gustado
         SharedData.getInstance().getLikedUsuarios().add(usuario.getNombre());
         System.out.println("Le has dado like a " + usuario.getNombre());

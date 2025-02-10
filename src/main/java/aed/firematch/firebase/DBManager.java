@@ -145,6 +145,22 @@ public class DBManager {
 
         for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
             Usuario usuario = document.toObject(Usuario.class);
+            if (usuario != null) {
+                usuario.setId(Integer.parseInt(document.getId())); // Set the user ID
+                // Load the user's profile picture
+                String imagePath = imageManager.getImagePath(usuario.getId());
+                if (imagePath != null) {
+                    InputStream imageStream = getClass().getClassLoader().getResourceAsStream(imagePath);
+                    if (imageStream != null) {
+                        Image image = new Image(imageStream);
+                        usuario.setFotoPerfil(image);
+                    } else {
+                        System.err.println("No se encontró la imagen para el usuario con ID: " + usuario.getId());
+                    }
+                } else {
+                    System.err.println("No image path found for user ID: " + usuario.getId());
+                }
+            }
             return usuario;
         }
         return null;
