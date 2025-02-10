@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <GridPane fx:id="loginRoot" hgap="5.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" vgap="5.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
@@ -23,14 +24,23 @@
       <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <Label text="Email:" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-      <Label text="Contraseña:" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-      <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <PasswordField fx:id="passwdTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="INICIAR SESIÓN" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
+      <Label text="Email:" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label text="Contraseña:" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="emailTextField" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <PasswordField fx:id="passwdTextField" promptText="Enter your password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="INICIAR SESIÓN" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
       <ButtonBar GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
         <buttons>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginAction" text="Iniciar sesión" />
+            <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#onLoginAction" text="Iniciar sesión" />
             <Button fx:id="cerrarButton" mnemonicParsing="false" onAction="#onCerrarButton" text="Cerrar" />
         </buttons>
          <GridPane.margin>
