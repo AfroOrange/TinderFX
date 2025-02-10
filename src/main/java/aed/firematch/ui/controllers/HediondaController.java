@@ -8,8 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -18,6 +20,7 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HediondaController implements Initializable {
@@ -46,9 +49,10 @@ public class HediondaController implements Initializable {
     private DBManager dbManager = new DBManager();
     private String userEmail;
     private List<Usuario> usuarios;
-    private ListProperty<Usuario> usuariosProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final ListProperty<Usuario> usuariosProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    public HediondaController() {
+    public HediondaController(String email) {
+        this.userEmail = email;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HediondasView.fxml"));
             loader.setController(this);
@@ -61,6 +65,23 @@ public class HediondaController implements Initializable {
     @FXML
     void onNextAction(ActionEvent event) {
         rejectperson();
+
+        if (usuarios.isEmpty()) {
+            emptyUsersAlert();
+        }
+    }
+
+    private void emptyUsersAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("There are no more users");
+        alert.setHeaderText(null);
+        alert.setContentText("Please try again later");
+
+        alert.showAndWait();
+
+        // clear the borderpane
+        hediondasRoot.getChildren().clear();
+        hediondasRoot.setCenter(new Label("No more users"));
     }
 
     private void rejectperson() {
@@ -79,12 +100,29 @@ public class HediondaController implements Initializable {
         usuariosProperty.add(usuario);
         System.out.println("Le has dado like a " + usuario.getNombre());
         rejectperson();
+
+        if (usuarios.isEmpty()) {
+            emptyUsersAlert();
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialize the list of users
+        loadUsers();
+    }
+
+    private void loadUsers() {
         usuarios = dbManager.obtenerUsuariosAleatorios(userEmail);
+
+        // remove the user from the list
+        for (Usuario usuario : usuarios) {
+            if (Objects.equals(usuario.getEmail(), userEmail)) {
+                usuarios.remove(usuario);
+                break;
+            }
+        }
+
         mostrarUsuarios(usuarios);
     }
 
@@ -96,6 +134,7 @@ public class HediondaController implements Initializable {
 
         // Mostrar el primer usuario de la lista
         Usuario usuario = usuarios.get(0);
+
         hediondaName.setText(usuario.getNombre());
         hediondaAge.setText(String.valueOf(usuario.getEdad()));
         hediondaDescription.getChildren().clear();

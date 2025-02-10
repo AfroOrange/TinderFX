@@ -84,32 +84,13 @@ public class MainController implements Initializable {
 
     @FXML
     void onStartAction(ActionEvent event) {
-        List<Usuario> usuarios = dbManager.obtenerUsuariosAleatorios(userEmail);
-        mostrarUsuarios(usuarios);
-        HediondaController hediondaController = new HediondaController();
+        HediondaController hediondaController = new HediondaController(userEmail);
         mainRoot.setCenter(hediondaController.getHediondasRoot());
     }
 
-    private void mostrarUsuarios(List<Usuario> usuarios) {
-        if (usuarios.isEmpty()) {
-            // Mostrar mensaje de que no hay usuarios disponibles
-            return;
-        }
+    @FXML
+    void onCheckMatches(ActionEvent event) {
 
-        // Mostrar el primer usuario de la lista
-        Usuario usuario = usuarios.get(0);
-        nameLabel.setText(usuario.getNombre());
-        ageLabel.setText(String.valueOf(usuario.getEdad()));
-        genderLabel.setText(usuario.getGenero().name());
-        descriptionArea.getChildren().clear();
-        descriptionArea.getChildren().add(new Text(usuario.getDescripcion()));
-
-        // Configurar el botón "Next" para mostrar el siguiente usuario
-        startButton.setText("Next");
-        startButton.setOnAction(event -> {
-            usuarios.remove(0);
-            mostrarUsuarios(usuarios);
-        });
     }
 
     public BorderPane getRoot() {
