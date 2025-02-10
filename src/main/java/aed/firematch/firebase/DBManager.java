@@ -11,8 +11,7 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class DBManager {
@@ -147,4 +146,25 @@ public class DBManager {
         }
         return null;
     }
+
+    public List<Usuario> obtenerUsuariosAleatorios(String emailLogeado) {
+        List<Usuario> usuarios = new ArrayList<>();
+        CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
+
+        try {
+            ApiFuture<QuerySnapshot> querySnapshot = usuariosRef.get();
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                Usuario usuario = document.toObject(Usuario.class);
+                if (usuario != null && !usuario.getEmail().equals(emailLogeado)) {
+                    usuarios.add(usuario);
+                }
+            }
+            Collections.shuffle(usuarios); // Mezclar la lista para obtener un orden aleatorio
+        } catch (InterruptedException | ExecutionException e) {
+            System.err.println("Error al obtener usuarios aleatorios: " + e.getMessage());
+        }
+
+        return usuarios;
+    }
+
 }

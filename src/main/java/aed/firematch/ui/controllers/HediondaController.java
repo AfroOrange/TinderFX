@@ -1,5 +1,10 @@
 package aed.firematch.ui.controllers;
 
+import aed.firematch.firebase.DBManager;
+import aed.firematch.ui.modelos.Usuario;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,11 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HediondaController implements Initializable {
@@ -37,6 +43,11 @@ public class HediondaController implements Initializable {
     @FXML
     private Button singarButton;
 
+    private DBManager dbManager = new DBManager();
+    private String userEmail;
+    private List<Usuario> usuarios;
+    private ListProperty<Usuario> usuariosProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+
     public HediondaController() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HediondasView.fxml"));
@@ -49,17 +60,46 @@ public class HediondaController implements Initializable {
 
     @FXML
     void onNextAction(ActionEvent event) {
+        rejectperson();
+    }
 
+    private void rejectperson() {
+        if (usuarios != null && !usuarios.isEmpty()) {
+            usuarios.remove(0);
+            mostrarUsuarios(usuarios);
+        }
     }
 
     @FXML
     void onSingarAction(ActionEvent event) {
+        // Obtener el usuario actual
+        Usuario usuario = usuarios.get(0);
 
+        // Guardar el usuario en la lista de usuarios que le han gustado
+        usuariosProperty.add(usuario);
+        System.out.println("Le has dado like a " + usuario.getNombre());
+        rejectperson();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Initialize the list of users
+        usuarios = dbManager.obtenerUsuariosAleatorios(userEmail);
+        mostrarUsuarios(usuarios);
+    }
 
+    private void mostrarUsuarios(List<Usuario> usuarios) {
+        if (usuarios.isEmpty()) {
+            // Mostrar mensaje de que no hay usuarios disponibles
+            return;
+        }
+
+        // Mostrar el primer usuario de la lista
+        Usuario usuario = usuarios.get(0);
+        hediondaName.setText(usuario.getNombre());
+        hediondaAge.setText(String.valueOf(usuario.getEdad()));
+        hediondaDescription.getChildren().clear();
+        hediondaDescription.getChildren().add(new Text(usuario.getDescripcion()));
     }
 
     public Label getHediondaAge() {
