@@ -1,17 +1,27 @@
 package aed.firematch.ui.controllers;
 
+import aed.firematch.firebase.DBManager;
+import aed.firematch.ui.modelos.SharedData;
+import aed.firematch.ui.modelos.Usuario;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HediondaController implements Initializable {
@@ -37,7 +47,13 @@ public class HediondaController implements Initializable {
     @FXML
     private Button singarButton;
 
-    public HediondaController() {
+    private final DBManager dbManager = new DBManager();
+    private final String userEmail;
+    private List<Usuario> usuarios;
+    private final ListProperty<Usuario> usuariosProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+
+    public HediondaController(String email) {
+        this.userEmail = email;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HediondasView.fxml"));
             loader.setController(this);
@@ -49,17 +65,101 @@ public class HediondaController implements Initializable {
 
     @FXML
     void onNextAction(ActionEvent event) {
+        rejectperson();
 
+        if (usuarios.isEmpty()) {
+            emptyUsersAlert();
+        }
+    }
+
+    private void emptyUsersAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("There are no more users");
+        alert.setHeaderText(null);
+        alert.setContentText("Please try again later");
+
+        alert.showAndWait();
+
+        // clear the borderpane
+        hediondasRoot.getChildren().clear();
+        hediondasRoot.setCenter(new Label("No more users"));
+    }
+
+    private void rejectperson() {
+
+        dbManager.cargarImagenesUsuarios(usuarios);
+
+        if (usuarios != null && !usuarios.isEmpty()) {
+            usuarios.remove(0);
+            mostrarUsuarios(usuarios);
+        }
     }
 
     @FXML
     void onSingarAction(ActionEvent event) {
+        // Obtener el usuario actual
+        Usuario usuario = usuarios.get(0);
 
+        // Verificar si el usuario ya está en la lista de matches
+        if (SharedData.getInstance().getLikedUsuarios().contains(usuario.getNombre())) {
+            System.err.println("El usuario " + usuario.getNombre() + " ya está en la lista de matches.");
+            return;
+        }
+
+        // Guardar el usuario en la lista de usuarios que le han gustado
+        SharedData.getInstance().getLikedUsuarios().add(usuario.getNombre());
+        System.out.println("Le has dado like a " + usuario.getNombre());
+        rejectperson();
+
+        usuario.getMatches().add(usuario);
+
+        if (usuarios.isEmpty()) {
+            emptyUsersAlert();
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Initialize the list of users
+        loadUsers();
+    }
 
+    private void loadUsers() {
+        usuarios = dbManager.obtenerUsuariosAleatorios(userEmail);
+
+        // Remove the user from the list
+        for (Usuario usuario : usuarios) {
+            if (Objects.equals(usuario.getEmail(), userEmail)) {
+                usuarios.remove(usuario);
+                break;
+            }
+        }
+
+        // Cargar imágenes de los usuarios
+        dbManager.cargarImagenesUsuarios(usuarios);
+
+        // Mostrar usuarios
+        mostrarUsuarios(usuarios);
+    }
+
+    private void mostrarUsuarios(List<Usuario> usuarios) {
+        if (usuarios.isEmpty()) {
+            // Mostrar mensaje de que no hay usuarios disponibles
+            return;
+        }
+
+        // Mostrar el primer usuario de la lista
+        Usuario usuario = usuarios.get(0);
+
+        hediondaName.setText(usuario.getNombre());
+        hediondaAge.setText(String.valueOf(usuario.getEdad()));
+        hediondaDescription.getChildren().clear();
+        hediondaDescription.getChildren().add(new Text(usuario.getDescripcion()));
+        if (usuario.getFotoPerfil() != null) {
+            hediondaPfP.setImage(usuario.getFotoPerfil());
+        } else {
+            System.err.println("No profile picture found for user ID: " + usuario.getId());
+        }
     }
 
     public Label getHediondaAge() {

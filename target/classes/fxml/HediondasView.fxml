@@ -12,20 +12,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-
-<BorderPane fx:id="hediondasRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="hediondasRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
    <center>
-      <ImageView fx:id="hediondaPfP" fitHeight="347.0" fitWidth="559.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+      <ImageView fx:id="hediondaPfP" fitHeight="347.0" fitWidth="331.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../images/wilfriedsingo.png" />
+            <Image url="@../images/usuario9.png" />
          </image>
       </ImageView>
    </center>
    <right>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: orange; -fx-border-width: 1; -fx-border-radius: 3;" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.5999755859375" minWidth="10.0" prefWidth="44.79998779296875" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.20001220703125" minWidth="10.0" prefWidth="155.20001220703125" />
@@ -36,12 +35,24 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Name:" />
-            <Label text="Age:" GridPane.rowIndex="1" />
-            <TextFlow fx:id="hediondaDescription" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+            <Label text="Name:" GridPane.halignment="LEFT">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label text="Age:" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <TextFlow fx:id="hediondaDescription" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
             <Label fx:id="hediondaName" GridPane.columnIndex="1" />
             <Label fx:id="hediondaAge" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </GridPane>
    </right>
    <bottom>
@@ -54,16 +65,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="singarButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSingarAction" style="-fx-background-color: green;" text="singar" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" />
-            <Button fx:id="onSingarAction" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onNextAction" style="-fx-background-color: red;" text="next" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Button fx:id="singarButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSingarAction" style="-fx-background-color: green; -fx-border-color: black;" text="Singar" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="NEVER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button fx:id="onSingarAction" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onNextAction" style="-fx-background-color: red; -fx-border-color: black;" text="Next" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER">
                <GridPane.margin>
-                  <Insets left="3.0" />
+                  <Insets />
                </GridPane.margin>
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
       </GridPane>
    </bottom>
 </BorderPane>

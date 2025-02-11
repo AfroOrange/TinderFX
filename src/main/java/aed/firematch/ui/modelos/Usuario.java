@@ -20,6 +20,7 @@ public class Usuario {
     private Image fotoPerfil;
     private ListProperty<String> caracteristicas = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ListProperty<Genero> gustos = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private ListProperty<Usuario> matches = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public Usuario() {
     }
@@ -163,5 +164,17 @@ public class Usuario {
 
     public void setGustos(ObservableList<Genero> gustos) {
         this.gustos.set(gustos);
+    }
+
+    public ObservableList<Usuario> getMatches() {
+        return matches.get();
+    }
+
+    public ListProperty<Usuario> matchesProperty() {
+        return matches;
+    }
+
+    public void setMatches(ObservableList<Usuario> matches) {
+        this.matches.set(matches);
     }
 }

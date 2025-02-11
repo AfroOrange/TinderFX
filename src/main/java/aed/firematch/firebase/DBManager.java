@@ -8,18 +8,20 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class DBManager {
-
+    private ImageManager imageManager;
     private Firestore db;
 
     public DBManager() {
+        imageManager = new ImageManager();
+
         try {
             // Cargar el archivo JSON desde la carpeta resources
             InputStream serviceAccount = DBManager.class.getClassLoader()
@@ -143,8 +145,69 @@ public class DBManager {
 
         for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
             Usuario usuario = document.toObject(Usuario.class);
+            if (usuario != null) {
+                usuario.setId(Integer.parseInt(document.getId())); // Set the user ID
+                // Load the user's profile picture
+                String imagePath = imageManager.getImagePath(usuario.getId());
+                if (imagePath != null) {
+                    InputStream imageStream = getClass().getClassLoader().getResourceAsStream(imagePath);
+                    if (imageStream != null) {
+                        Image image = new Image(imageStream);
+                        usuario.setFotoPerfil(image);
+                    } else {
+                        System.err.println("No se encontró la imagen para el usuario con ID: " + usuario.getId());
+                    }
+                } else {
+                    System.err.println("No image path found for user ID: " + usuario.getId());
+                }
+            }
             return usuario;
         }
         return null;
+    }
+
+    public List<Usuario> obtenerUsuariosAleatorios(String emailLogeado) {
+        List<Usuario> usuarios = new ArrayList<>();
+        CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
+
+        try {
+            ApiFuture<QuerySnapshot> querySnapshot = usuariosRef.get();
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                Usuario usuario = document.toObject(Usuario.class);
+                if (usuario != null && !usuario.getEmail().equals(emailLogeado)) {
+                    usuario.setId(Integer.parseInt(document.getId())); // Asegúrate de que el ID se establece correctamente
+                    usuarios.add(usuario);
+                }
+            }
+            Collections.shuffle(usuarios); // Mezclar la lista para obtener un orden aleatorio
+        } catch (InterruptedException | ExecutionException e) {
+            System.err.println("Error al obtener usuarios aleatorios: " + e.getMessage());
+        }
+
+        return usuarios;
+    }
+
+    public void cargarImagenesUsuarios(List<Usuario> usuarios) {
+        for (Usuario usuario : usuarios) {
+            int id = usuario.getId();
+            String imagePath = imageManager.getImagePath(id);
+            if (imagePath != null) {
+                System.out.println("Loading image from path: " + imagePath); // Debug statement
+                InputStream imageStream = getClass().getClassLoader().getResourceAsStream(imagePath);
+                if (imageStream != null) {
+                    Image image = new Image(imageStream);
+                    usuario.setFotoPerfil(image);
+                    System.out.println("Image loaded successfully for user ID: " + id); // Debug statement
+                } else {
+                    System.err.println("No se encontró la imagen para el usuario con ID: " + id);
+                }
+            } else {
+                System.err.println("No image path found for user ID: " + id);
+            }
+        }
+    }
+
+    public void logout() {
+        FirebaseApp.getInstance().delete();
     }
 }

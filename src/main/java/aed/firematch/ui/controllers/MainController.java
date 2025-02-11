@@ -7,15 +7,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
@@ -50,6 +56,9 @@ public class MainController implements Initializable {
     @FXML
     private Button startButton;
 
+    @FXML
+    private VBox startBox;
+
     public MainController(String userEmail) {
         this.userEmail = userEmail;
         try {
@@ -63,7 +72,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // initialize user information
+        // Initialize user information
         try {
             cityLabel.setText(IPinfoAPI.getLocation());
 
@@ -75,6 +84,15 @@ public class MainController implements Initializable {
                 ageLabel.setText(String.valueOf(usuario.getEdad()));
                 genderLabel.setText(usuario.getGenero().name());
                 descriptionArea.getChildren().add(new Text(usuario.getDescripcion()));
+                if (usuario.getFotoPerfil() != null) {
+                    ImageView profileImageView = new ImageView(usuario.getFotoPerfil());
+                    profileImageView.setFitHeight(150);
+                    profileImageView.setFitWidth(200);
+                    profileImageView.setPreserveRatio(true);
+                    userInformationPane.add(profileImageView, 0, 0, 3, 1);
+                } else {
+                    System.err.println("No profile picture found for user ID: " + usuario.getId());
+                }
             }
         } catch (IOException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -83,8 +101,39 @@ public class MainController implements Initializable {
 
     @FXML
     void onStartAction(ActionEvent event) {
-        HediondaController hediondaController = new HediondaController();
+        HediondaController hediondaController = new HediondaController(userEmail);
         mainRoot.setCenter(hediondaController.getHediondasRoot());
+    }
+
+    @FXML
+    void onCheckMatches(ActionEvent event) {
+        // this method will load a modal window with the list of users that liked the current user
+
+        MatchesController matchesController = new MatchesController();
+        mainRoot.setCenter(matchesController.getMatchesRoot());
+
+    }
+
+    @FXML
+    void onBackAction(ActionEvent event) {
+        // this method will remove the center of the main root and show the user information again
+        mainRoot.setCenter(startBox);
+    }
+
+    @FXML
+    void onLogoutAction(ActionEvent event) {
+        // this method will close the main window and show the login window
+        LoginController loginController = new LoginController();
+
+        mainRoot.getScene().getWindow().hide();
+
+        // create a new login
+        Scene scene = new Scene(loginController.getLoginRoot());
+        Stage loginStage = new Stage();
+        loginStage.initStyle(StageStyle.UNDECORATED);
+        loginStage.setScene(scene);
+        loginStage.setTitle("FireMatch");
+        loginStage.show();
     }
 
     public BorderPane getRoot() {
