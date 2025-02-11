@@ -48,6 +48,10 @@ public class MatchesController implements Initializable {
         deleteButton.disableProperty().bind(matchesListView.getSelectionModel().selectedItemProperty().isNull());
     }
 
+    public static void clearMatches() {
+        SharedData.getInstance().getLikedUsuarios().clear();
+    }
+
     public Button getDeleteButton() {
         return deleteButton;
     }

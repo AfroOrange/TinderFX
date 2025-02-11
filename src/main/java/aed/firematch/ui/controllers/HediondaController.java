@@ -103,6 +103,7 @@ public class HediondaController implements Initializable {
         // Verificar si el usuario ya está en la lista de matches
         if (SharedData.getInstance().getLikedUsuarios().contains(usuario.getNombre())) {
             System.err.println("El usuario " + usuario.getNombre() + " ya está en la lista de matches.");
+            duplicatedAlert();
             return;
         }
 
@@ -116,6 +117,14 @@ public class HediondaController implements Initializable {
         if (usuarios.isEmpty()) {
             emptyUsersAlert();
         }
+    }
+
+    private void duplicatedAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("User already liked");
+        alert.setHeaderText(null);
+        alert.setContentText("This user is already in your matches");
+        alert.showAndWait();
     }
 
     @Override

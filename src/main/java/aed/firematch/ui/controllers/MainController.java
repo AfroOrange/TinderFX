@@ -122,6 +122,9 @@ public class MainController implements Initializable {
 
     @FXML
     void onLogoutAction(ActionEvent event) {
+        // clear MatchesController list of matches
+        MatchesController.clearMatches();
+
         // this method will close the main window and show the login window
         LoginController loginController = new LoginController();
 
